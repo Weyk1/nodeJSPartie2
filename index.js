@@ -4,22 +4,24 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const fs = require('fs');
 
 // Importation et configuration de Mustache pour le rendu des vues
-
+const mustacheExpress = require('mustache-express');
+const bodyParser = require('body-parser');
 
 
 // Configuration de l'application pour utiliser bodyParser (pour lire les données POST)
-
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Configuration du moteur de rendu des vues
-// Spécifie le dossier contenant les vues
-// Définit Mustache comme moteur de rendu des vues
-// Associe Mustache à l'extension de fichier .mustache
+app.set('views', __dirname + '/views'); // Spécifie le dossier contenant les vues
+app.set('view engine', 'mustache'); // Définit Mustache comme moteur de rendu des vues
+app.engine('mustache', mustacheExpress()); // Associe Mustache à l'extension de fichier .mustache
 
 // Route GET pour la page d'accueil
 app.get('/', function(req, res) {
- 
+ res.render('mon-template', {myName :'Karl'});
 });
 
 // Démarrage du serveur sur le port spécifié
